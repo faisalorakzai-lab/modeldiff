@@ -24,7 +24,7 @@ Ordinary unit tests do not cover these cases well, because the "code" that chang
 - **Six check types.**
   | Type | Passes when |
   | --- | --- |
-| `exact` | output equals `expected` (whitespace-stripped by default; optional case-insensitive and whitespace normalization) |
+  | `exact` | output equals `expected` (whitespace-stripped by default; optional case-insensitive and whitespace normalization) |
   | `json` | output parses as JSON and, if `schema` is given, validates against that JSON Schema |
   | `classification` | the predicted label equals `expected` and is one of `labels` (if given) |
   | `required_fields` | the JSON output contains every dotted path in `required` and matches `values` |
