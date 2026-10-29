@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 # "modeldiff" is already taken on PyPI by an unrelated project (MadryLab/modeldiff),
 # so the distribution name is prefixed. The import name and CLI are `modeldiff`.
 name = "openwave-modeldiff"
-version = "0.1.0"
+version = "0.1.1"
 description = "Regression testing for local AI: compare model outputs across versions, configurations, and runtimes."
 readme = "README.md"
 requires-python = ">=3.11"
