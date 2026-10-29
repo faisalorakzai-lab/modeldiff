@@ -24,7 +24,7 @@ Ordinary unit tests do not cover these cases well, because the "code" that chang
 - **Six check types.**
   | Type | Passes when |
   | --- | --- |
-  | `exact` | output equals `expected` (whitespace-stripped by default; optional case-insensitive) |
+| `exact` | output equals `expected` (whitespace-stripped by default; optional case-insensitive and whitespace normalization) |
   | `json` | output parses as JSON and, if `schema` is given, validates against that JSON Schema |
   | `classification` | the predicted label equals `expected` and is one of `labels` (if given) |
   | `required_fields` | the JSON output contains every dotted path in `required` and matches `values` |
@@ -155,7 +155,7 @@ Fields used by each type:
 
 | Type | Fields | Options |
 | --- | --- | --- |
-| `exact` | `expected` (string) | `strip` (default `true`), `ignore_case` (default `false`) |
+| `exact` | `expected` (string) | `strip` (default `true`), `ignore_case` (default `false`), `normalize_whitespace` (default `false`) |
 | `json` | `schema` (JSON Schema, optional) | none |
 | `classification` | `expected` (label), `labels` (optional allowed set) | `normalize` (default `true`: strip and case-fold) |
 | `required_fields` | `required` (list of dotted paths), `values` (path: expected value) | none |
@@ -163,6 +163,20 @@ Fields used by each type:
 | `custom` | `check` (registered name), `params` (any mapping) | none |
 
 Dotted paths address nested objects and list items: `customer.name`, `items.0.sku`.
+
+For `exact` checks, `normalize_whitespace: true` collapses every run of whitespace—including
+newlines, tabs, and carriage returns—to one space before comparing. It is opt-in so that the
+default remains strict about formatting:
+
+```yaml
+- id: greeting
+  type: exact
+  input: "Say hello"
+  expected: "Hello world"
+  options: {normalize_whitespace: true}
+```
+
+Mismatch positions are reported in the normalized text.
 
 `tool_call` accepts these output shapes: `{"name", "arguments"}`, `{"function": {"name", "arguments"}}` (arguments may be a JSON string), and `{"tool_calls": [...]}` or a list containing exactly one call.
 
